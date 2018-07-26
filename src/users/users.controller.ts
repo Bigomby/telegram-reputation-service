@@ -3,8 +3,8 @@ import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { VotesService } from '../votes/votes.service';
 
 type Vote = { tag: string; userId: string };
-type MergedVote = { tag: string; count: number };
-type UserInfo = { id: string; tags: Array<MergedVote> };
+type VoteCount = { tag: string; count: number };
+type UserInfo = { id: string; tags: Array<VoteCount> };
 
 @Controller('users')
 export class UsersController {
@@ -22,7 +22,7 @@ export class UsersController {
   }
 }
 
-function mergeVote(list: Array<MergedVote>, vote: Vote): Array<MergedVote> {
+function mergeVote(list: Array<VoteCount>, vote: Vote): Array<VoteCount> {
   const idx = list.findIndex(({ tag }) => tag === vote.tag);
 
   if (idx < 0) {
