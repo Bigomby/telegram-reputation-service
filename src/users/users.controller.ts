@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
 
 import { VotesService } from '../votes/votes.service';
 
@@ -17,12 +17,17 @@ export class UsersController {
 
     return {
       id: userId,
-      tags: userVotes.reduce(mergeVote, new Array()),
+      tags: userVotes.reduce(countVotes, new Array()),
     };
+  }
+
+  @Delete(':userId')
+  public async deleteAllVotesFrom(@Param('userId') userId): Promise<void> {
+    await this.votesService.deleteAllVotesFrom(userId);
   }
 }
 
-function mergeVote(list: Array<VoteCount>, vote: Vote): Array<VoteCount> {
+function countVotes(list: Array<VoteCount>, vote: Vote): Array<VoteCount> {
   const idx = list.findIndex(({ tag }) => tag === vote.tag);
 
   if (idx < 0) {

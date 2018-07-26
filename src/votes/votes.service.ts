@@ -13,11 +13,19 @@ export class VotesService {
     return this.repository.find();
   }
 
-  public async vote(userId: string, tag: string): Promise<Vote> {
+  public async vote(userId: string, tag: string, voter: string): Promise<Vote> {
     const vote = new Vote();
     vote.userId = userId;
     vote.tag = tag;
+    vote.voter = voter;
 
-    return this.repository.save(vote);
+    const response = await this.repository.save(vote);
+    delete response.voter;
+
+    return response;
+  }
+
+  public async deleteAllVotesFrom(userId: string): Promise<void> {
+    this.repository.delete({ voter: userId });
   }
 }

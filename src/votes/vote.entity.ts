@@ -4,5 +4,6 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Vote {
   @PrimaryGeneratedColumn() id: number;
   @Column() userId: string;
+  @Column() voter: string;
   @Column() tag: string;
 }

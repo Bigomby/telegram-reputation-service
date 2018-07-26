@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Headers } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { VotesService } from './votes.service';
 import { Vote } from './vote.entity';
@@ -9,7 +10,12 @@ export class VotesController {
   constructor(private readonly votesService: VotesService) {}
 
   @Post()
-  async vote(@Body() vote: VoteDto): Promise<Vote> {
-    return this.votesService.vote(vote.userId, vote.tag);
+  @UseGuards(AuthGuard('bearer'))
+  public async vote(
+    @Body() vote: VoteDto,
+    @Headers('authorization') authorization: string,
+  ): Promise<Vote> {
+    const [__, token] = authorization.split(' ');
+    return this.votesService.vote(vote.userId, vote.tag, token);
   }
 }
