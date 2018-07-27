@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UsersModule } from './users/users.module';
-import { VotesModule } from './votes/votes.module';
-import { ApiKeysModule } from './api-keys/api-key.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { VotesModule } from './modules/votes/votes.module';
+import { ApiKeysModule } from './modules/api-keys/api-key.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ApiKey } from './modules/api-keys/api-key.entity';
+import { Vote } from './modules/votes/vote.entity';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'password',
       database: 'postgres',
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [ApiKey, Vote],
     }),
   ],
 })

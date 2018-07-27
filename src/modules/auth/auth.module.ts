@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { AuthService } from './auth.service';
-import { HttpStrategy } from './http.strategy';
+import { HttpStrategy } from './strategies/http.strategy';
 import { ApiKeysModule } from '../api-keys/api-key.module';
 
 @Module({
   imports: [ApiKeysModule],
-  providers: [AuthService, HttpStrategy],
+  providers: [HttpStrategy],
 })
 export class AuthModule {}
