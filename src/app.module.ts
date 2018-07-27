@@ -20,7 +20,6 @@ import { AuthModule } from './auth/auth.module';
       password: 'password',
       database: 'postgres',
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: true,
     }),
   ],
 })
